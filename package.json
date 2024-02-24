@@ -7,7 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint && prettier . --write",
-    "prettier": "prettier . --write"
+    "prettier": "prettier . --write",
+    "docker:build": "docker build -t next-app .",
+    "docker:ecr:login": "aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin 146114061358.dkr.ecr.ap-northeast-1.amazonaws.com",
+    "docker:ecr:tag": "docker tag next-app:latest 146114061358.dkr.ecr.ap-northeast-1.amazonaws.com/next-app:5a438c6",
+    "docker:ecr:push": "docker push 146114061358.dkr.ecr.ap-northeast-1.amazonaws.com/next-app:5a438c6",
+    "docker:ecr:deploy": "npm run build && npm run docker:build && npm run docker:ecr:login && npm run docker:ecr:tag && npm run docker:ecr:push"
   },
   "dependencies": {
     "next": "14.1.0",
